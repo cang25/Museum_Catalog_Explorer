@@ -3,9 +3,6 @@ import Card from "react-bootstrap/Card";
 import useSWR from "swr";
 import Link from "next/link";
 
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 export default function ArtworkCard(props) {
   const { data, error } = useSWR(
     `https://collectionapi.metmuseum.org/public/collection/v1/objects/${props.objectID}`
@@ -13,7 +10,9 @@ export default function ArtworkCard(props) {
 
   if (error) return <Error statuscode={404} />;
 
-  if (data) {
+  if (!data) return null;
+
+
     return (
       <Card style={{ width: "18rem" }}>
         <Card.Img
@@ -25,11 +24,12 @@ export default function ArtworkCard(props) {
           }
         />
         <Card.Body>
-          <Card.Title>Title: {data.title ? data.tile : "N/A"}</Card.Title>
+          <Card.Title>{data.title ? data.title : "N/A"}</Card.Title>
           <Card.Text>
             <strong>Date: </strong> {data.objectDate ? data.objectDate : "N/A"}
             <br />
-            <strong>Classification: </strong> {data.classification ? data.classification : "N/A"}
+            <strong>Classification: </strong>{" "}
+            {data.classification ? data.classification : "N/A"}
             <br />
             <strong>Art Medium: </strong> {data.medium ? data.medium : "N/A"}
             <br />
@@ -45,7 +45,8 @@ export default function ArtworkCard(props) {
             <br />
             <strong>Credit Line:</strong> {data.creditLine}
             <br />
-            <strong>Dimensions: </strong>{data.dimensions}
+            <strong>Dimensions: </strong>
+            {data.dimensions}
             <br />
             <br />
             <Link href={`/artwork/${props.objectID}`} passHref legacyBehavior>
@@ -55,7 +56,5 @@ export default function ArtworkCard(props) {
         </Card.Body>
       </Card>
     );
-  } else {
-    return null;
-  }
+
 }

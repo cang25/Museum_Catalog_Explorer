@@ -3,7 +3,6 @@ import Card from "react-bootstrap/Card";
 import useSWR from "swr";
 import Link from "next/link";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function ArtworkCard(props) {
   console.log("ArtworkCard Test")
@@ -18,6 +17,9 @@ export default function ArtworkCard(props) {
 
   console.log(data)
 
+  if(data){
+
+ 
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img
@@ -37,6 +39,7 @@ export default function ArtworkCard(props) {
           <br />
           <strong>Medium: </strong>{data.medium ? data.medium : "N/A"}
           <br />
+          <br />
           <Link href={`/artwork/${props.objectID}`} passHref legacyBehavior>
             <Button variant="primary">{data.objectID}</Button>
           </Link>
@@ -44,4 +47,7 @@ export default function ArtworkCard(props) {
       </Card.Body>
     </Card>
   );
+}else{
+    return null;
+}
 }
