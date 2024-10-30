@@ -24,7 +24,7 @@ export default function MainNav() {
             <Navbar.Brand>Christine Ang</Navbar.Brand>
             <Nav className="me-auto">
               <Link href="/" passHref legacyBehavior>
-                <Nav.Link>Listings</Nav.Link>
+                <Nav.Link>Home</Nav.Link>
               </Link>
               <Link href="/search" passHref legacyBehavior>
                 <Nav.Link>Advanced Search</Nav.Link>
@@ -33,13 +33,14 @@ export default function MainNav() {
           </div>
 
           <Form className="d-flex" onSubmit={submitForm}>
-            <input
+          <Form.Control
+              type="search"
               placeholder="Search"
+              className="me-2"
               value={searchField}
               onChange={(e) => setSearchField(e.target.value)}
-              className="form-control me-2"
             />
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success" type="submit">Search</Button>
           </Form>
         </Container>
       </Navbar>

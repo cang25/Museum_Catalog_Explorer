@@ -1,13 +1,14 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import useSWR from "swr";
+import Link from "next/link";
+
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-export default function ArtworkCard(objectID) {
+export default function ArtworkCard(props) {
   const { data, error } = useSWR(
-    `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`,
-    fetcher
+    `https://collectionapi.metmuseum.org/public/collection/v1/objects/${props.objectID}`
   );
 
   if (error) return <Error statuscode={404} />;
@@ -24,13 +25,13 @@ export default function ArtworkCard(objectID) {
           }
         />
         <Card.Body>
-          <Card.Title>{data.title ? data.tile : "N/A"}</Card.Title>
+          <Card.Title>Title: {data.title ? data.tile : "N/A"}</Card.Title>
           <Card.Text>
-            {data.objectDate ? data.objectDate : "N/A"}
+            <strong>Date: </strong> {data.objectDate ? data.objectDate : "N/A"}
             <br />
-            {data.classification ? data.classification : "N/A"}
+            <strong>Classification: </strong> {data.classification ? data.classification : "N/A"}
             <br />
-            {data.medium ? data.medium : "N/A"}
+            <strong>Art Medium: </strong> {data.medium ? data.medium : "N/A"}
             <br />
             <br />
             {data.artistDisplayName
@@ -42,14 +43,15 @@ export default function ArtworkCard(objectID) {
                 )
               : "N/A"}
             <br />
-            {data.creditLine}
+            <strong>Credit Line:</strong> {data.creditLine}
             <br />
-            {data.dimensions}
-            <Link href={`/artwork/${objectID}`} passHref legacyBehavior>
+            <strong>Dimensions: </strong>{data.dimensions}
+            <br />
+            <br />
+            <Link href={`/artwork/${props.objectID}`} passHref legacyBehavior>
               <Button variant="primary">{data.objectID}</Button>
             </Link>
           </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
         </Card.Body>
       </Card>
     );
