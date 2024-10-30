@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import useSWR from "swr";
 import Link from "next/link";
 
-export default function ArtworkCard(props) {
+export default function ArtworkCardDetail(props) {
   const { data, error } = useSWR(
     `https://collectionapi.metmuseum.org/public/collection/v1/objects/${props.objectID}`
   );
@@ -34,14 +34,9 @@ export default function ArtworkCard(props) {
             <strong>Art Medium: </strong> {data.medium ? data.medium : "N/A"}
             <br />
             <br />
-            {data.artistDisplayName
-              ? data.artistDisplayName &&
-                data.artistWikiData_URL && (
-                  <a href={artistWikidata_URL} target="_blank" rel="noreferrer">
-                    wiki
-                  </a>
-                )
-              : "N/A"}
+            <strong>Artist: </strong> {data.artistDisplayName ? data.artistDisplayName: "N/A"}{" "} <a href={data.artistWikidata_URL}
+                target="_blank"
+                rel="noreferrer">wiki</a>
             <br />
             <strong>Credit Line:</strong> {data.creditLine}
             <br />
