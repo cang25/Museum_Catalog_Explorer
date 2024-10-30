@@ -5,37 +5,42 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-
+import { useRouter } from "next/router";
 
 export default function MainNav() {
-  
-    const [searchField, setSearchField] = useState("")
+  const [searchField, setSearchField] = useState("");
+  const router = useRouter();
 
-    function submitForm(e){
-        e.preventDefault();
-    }
+  function submitForm(e) {
+    e.preventDefault();
+    router.push(`/artwork?title=true&q=${searchField}`);
+  }
 
-
-    return (
+  return (
     <>
       <Navbar className="fixed-top navbar-dark bg-dark">
-      <Container className="d-flex justify-content-between">
-      <div className="d-flex">
-          <Navbar.Brand>Christine Ang</Navbar.Brand>
-          <Nav className="me-auto">
-            <Link href="/" passHref legacyBehavior>
-              <Nav.Link>Listings</Nav.Link>
-            </Link>
-            <Link href="/search" passHref legacyBehavior>
-              <Nav.Link>Advanced Search</Nav.Link>
-            </Link>
+        <Container className="d-flex justify-content-between">
+          <div className="d-flex">
+            <Navbar.Brand>Christine Ang</Navbar.Brand>
+            <Nav className="me-auto">
+              <Link href="/" passHref legacyBehavior>
+                <Nav.Link>Listings</Nav.Link>
+              </Link>
+              <Link href="/search" passHref legacyBehavior>
+                <Nav.Link>Advanced Search</Nav.Link>
+              </Link>
             </Nav>
-            </div>
+          </div>
 
-            <Form className="d-flex" onSubmit={submitForm}>
-                <input placeholder="Search" value={searchField} onChange={(e)=> setSearchField(e.target.value)}  className="form-control me-2"/>
-              <Button variant="outline-success">Search</Button>
-            </Form>
+          <Form className="d-flex" onSubmit={submitForm}>
+            <input
+              placeholder="Search"
+              value={searchField}
+              onChange={(e) => setSearchField(e.target.value)}
+              className="form-control me-2"
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
         </Container>
       </Navbar>
       <br />
