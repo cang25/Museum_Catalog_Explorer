@@ -13,7 +13,6 @@ export default function Artwork() {
   const [artworkList, setArtworkList] = useState();
   const [page, setPage] = useState(1);
 
-  console.log("ARTWORK INDEX");
   let finalQuery = router.asPath.split("?")[1];
 
   const { data, error } = useSWR(
