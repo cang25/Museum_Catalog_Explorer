@@ -46,9 +46,6 @@ export default function ArtworkCardDetail(props) {
           {data.dimensions}
           <br />
           <br />
-          <Link href={`/artwork/${props.objectID}`} passHref legacyBehavior>
-            <Button variant="primary">{data.objectID}</Button>
-          </Link>
         </Card.Text>
       </Card.Body>
     </Card>
