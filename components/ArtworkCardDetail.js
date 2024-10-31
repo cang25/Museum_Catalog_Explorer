@@ -35,10 +35,20 @@ export default function ArtworkCardDetail(props) {
           <br />
           <br />
           <strong>Artist: </strong>{" "}
-          {data.artistDisplayName ? data.artistDisplayName : "N/A"}{" "}
-          <a href={data.artistWikidata_URL} target="_blank" rel="noreferrer">
-            wiki
-          </a>
+          {data.artistDisplayName ? (
+            <>
+              {data.artistDisplayName}{" "}
+              <a
+                href={data.artistWikidata_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                wiki
+              </a>
+            </>
+          ) : (
+            "N/A"
+          )}
           <br />
           <strong>Credit Line:</strong> {data.creditLine}
           <br />
