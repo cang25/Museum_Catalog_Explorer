@@ -19,10 +19,13 @@ export default function Artwork() {
   const { data, error } = useSWR(
     `https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}`
   );
-
+  
   useEffect(() => {
-    if (data) {
-      const results = [];
+
+    const results = [];
+
+    if (data != null && data != undefined) {
+
       for (let i = 0; i < data?.objectIDs?.length; i += PER_PAGE) {
         const chunk = data?.objectIDs.slice(i, i + PER_PAGE);
         results.push(chunk);
@@ -42,16 +45,16 @@ export default function Artwork() {
     if (page < artworkList.length) setPage((prevPage) => prevPage + 1);
   };
 
-  if (error) return <Error statusCode={404} />;
   if (!artworkList) return null;
+  if (error) return <Error statuscode={404} />;
 
   return (
     <>
-      {artworkList.length > 0 && data ? (
+      {artworkList.length > 0 ? (
         <Row className="gy-4">
-          {artworkList[page - 1].map((ObjectID) => (
-            <Col lg={3} key={ObjectID}>
-              <ArtworkCard objectID={ObjectID} />
+          {artworkList[page - 1].map((currentObjectID) => (
+            <Col lg={3} key={currentObjectID}>
+              <ArtworkCard objectID={currentObjectID} />
             </Col>
           ))}
         </Row>

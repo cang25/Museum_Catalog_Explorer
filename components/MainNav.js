@@ -14,6 +14,7 @@ export default function MainNav() {
   function submitForm(e) {
     e.preventDefault();
     router.push(`/artwork?title=true&q=${searchField}`);
+    setSearchField("")
   }
 
   return (

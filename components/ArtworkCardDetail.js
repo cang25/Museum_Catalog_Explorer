@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import useSWR from "swr";
 import Link from "next/link";
+import Error from "next/error";
 
 export default function ArtworkCardDetail(props) {
   const { data, error } = useSWR(
@@ -10,7 +11,7 @@ export default function ArtworkCardDetail(props) {
 
   if (error) return <Error statuscode={404} />;
 
-  if (!data) return null;
+  if (data === null || data === undefined) return null;
 
   return (
     <Card style={{ width: "18rem" }}>
