@@ -14,7 +14,7 @@ export default function MainNav() {
   function submitForm(e) {
     e.preventDefault();
     router.push(`/artwork?title=true&q=${searchField}`);
-    setSearchField("")
+    setSearchField("");
   }
 
   return (
@@ -34,14 +34,16 @@ export default function MainNav() {
           </div>
 
           <Form className="d-flex" onSubmit={submitForm}>
-          <Form.Control
+            <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               value={searchField}
               onChange={(e) => setSearchField(e.target.value)}
             />
-            <Button variant="outline-success" type="submit">Search</Button>
+            <Button variant="outline-success" type="submit" disabled={!searchField}>
+              Search
+            </Button>
           </Form>
         </Container>
       </Navbar>
