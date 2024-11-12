@@ -9,42 +9,74 @@ import { useRouter } from "next/router";
 
 export default function MainNav() {
   const [searchField, setSearchField] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const router = useRouter();
 
   function submitForm(e) {
     e.preventDefault();
     router.push(`/artwork?title=true&q=${searchField}`);
     setSearchField("");
+    setIsExpanded(false);
+  }
+
+  function handleNavToggle() {
+    let isAlreadyExpanded = isExpanded;
+    if (isAlreadyExpanded) {
+      setIsExpanded(false);
+    } else {
+      setIsExpanded(true);
+    }
+  }
+
+  function handleNavLinkClick() {
+    setIsExpanded(false);
   }
 
   return (
     <>
-      <Navbar className="fixed-top navbar-dark bg-dark">
-        <Container className="d-flex justify-content-between">
-          <div className="d-flex">
-            <Navbar.Brand>Christine Ang</Navbar.Brand>
+      <Navbar
+        className="fixed-top navbar-dark bg-dark"
+        expanded={isExpanded}
+        expand="lg"
+      >
+        <Container>
+          <Navbar.Brand>Christine Ang</Navbar.Brand>
+
+          <Navbar.Toggle
+            aria-controls="navbarSupportedContent"
+            onClick={handleNavToggle}
+          />
+
+          <Navbar.Collapse>
             <Nav className="me-auto">
               <Link href="/" passHref legacyBehavior>
-                <Nav.Link>Home</Nav.Link>
+                <Nav.Link onClick={handleNavLinkClick}>Home</Nav.Link>
               </Link>
               <Link href="/search" passHref legacyBehavior>
-                <Nav.Link>Advanced Search</Nav.Link>
+                <Nav.Link onClick={handleNavLinkClick}>
+                  Advanced Search
+                </Nav.Link>
               </Link>
             </Nav>
-          </div>
 
-          <Form className="d-flex" onSubmit={submitForm}>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              value={searchField}
-              onChange={(e) => setSearchField(e.target.value)}
-            />
-            <Button variant="outline-success" type="submit" disabled={!searchField}>
-              Search
-            </Button>
-          </Form>
+            <Form className="d-flex" onSubmit={submitForm}>
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                value={searchField}
+                onChange={(e) => setSearchField(e.target.value)}
+              />
+              <Button
+                variant="outline-success"
+                type="submit"
+                disabled={!searchField}
+              >
+                Search
+              </Button>
+            </Form>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       <br />
