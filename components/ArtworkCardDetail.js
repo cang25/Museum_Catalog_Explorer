@@ -1,33 +1,54 @@
 import Card from "react-bootstrap/Card";
-import { Button } from "bootstrap";
+import { Button } from "react-bootstrap";
 import useSWR from "swr";
 import Error from "next/error";
 import { useAtom } from "jotai";
-import { favouritesAtom } from "@store"
-import { useState } from "react";
+import { favouritesAtom } from "@/store";
+import { useState, useEffect } from "react";
 
 export default function ArtworkCardDetail(props) {
+  
+
+  //get reference to the Favourites List
+  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
+
+
+  // Set initial artAdded value based on whether objectID is in favouritesList
+  const [artAdded, setArtAdded] = useState(false);
+
+  console.log("BEFORE ADDING")
+  console.log(favouritesList)
+
+  // Update artAdded whenever favouritesList changes
+  useEffect(() => {
+    setArtAdded(favouritesList ?.includes(props.objectID));
+  }, [favouritesList]);
+
+  
   const { data, error } = useSWR(
-    `https://collectionapi.metmuseum.org/public/collection/v1/objects/${props.objectID}`
+    props.objectID
+      ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${props.objectID}`
+      : null
   );
 
   if (error) return <Error statuscode={404} />;
 
   if (data === null || data === undefined) return null;
 
-  //get reference to the Favourites List
-  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
-
-  //showAdded value
-  const [showAdded, setShowAdded] = useState(true);
 
   function favouritesClicked() {
-    if (showAdded) {
-      setFavouritesList((current) => current.filter((fav) => fav != objectID));
-      setShowAdded(false);
+    if (artAdded) {
+      setFavouritesList((current) =>
+        current.filter((fav) => fav != props.objectID)
+      );
+      console.log("REMOVED")
+      console.log(favouritesList)
+      setArtAdded(false);
     } else {
-      setFavouritesList((current) => [...current, objectID]);
-      setShowAdded(true);
+      setFavouritesList((current) => [...current, props.objectID]);
+      setArtAdded(true);
+      console.log("ADDED")
+      console.log(favouritesList)
     }
   }
 
@@ -74,6 +95,12 @@ export default function ArtworkCardDetail(props) {
           {data.dimensions}
           <br />
           <br />
+          <Button
+            onClick={favouritesClicked}
+            variant={artAdded ? "primary" : "outline-primary"}
+          >
+            {artAdded ? "+ Favourite (added)"  : "+ Favourite" }
+          </Button>
         </Card.Text>
       </Card.Body>
     </Card>

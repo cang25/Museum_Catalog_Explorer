@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { NavDropdown } from "react-bootstrap";
 
 export default function MainNav() {
   const [searchField, setSearchField] = useState("");
@@ -33,6 +34,8 @@ export default function MainNav() {
     setIsExpanded(false);
   }
 
+
+
   return (
     <>
       <Navbar
@@ -59,7 +62,6 @@ export default function MainNav() {
                 </Nav.Link>
               </Link>
             </Nav>
-
             <Form className="d-flex" onSubmit={submitForm}>
               <Form.Control
                 type="search"
@@ -76,6 +78,15 @@ export default function MainNav() {
                 Search
               </Button>
             </Form>
+            &nbsp;&nbsp;
+
+            <Nav>
+              <NavDropdown title="User Name" id="basic-nav-dropdown">
+                <Link href="/favourites" passHref legacyBehavior>
+                  <NavDropdown.Item onClick={handleNavLinkClick}>Favourites</NavDropdown.Item>
+                </Link>
+              </NavDropdown>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
