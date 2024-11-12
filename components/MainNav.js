@@ -1,3 +1,5 @@
+import { searchHistoryAtom } from "@/store";
+import { useAtom } from "jotai";
 import Link from "next/link";
 import { useState } from "react";
 import Container from "react-bootstrap/Container";
@@ -8,17 +10,24 @@ import { Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { NavDropdown } from "react-bootstrap";
 
+
 export default function MainNav() {
-  const [searchField, setSearchField] = useState("");
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const router = useRouter();
 
+  const [searchField, setSearchField] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
+
   function submitForm(e) {
     e.preventDefault();
-    router.push(`/artwork?title=true&q=${searchField}`);
-    setSearchField("");
+    const queryString = `title=true&q=${searchField}`;
+    setSearchHistory((current) => [...current, searchField]);
     setIsExpanded(false);
+    router.push(`/artwork?${queryString}`);
+    setSearchField("");
+
   }
 
   function handleNavToggle() {
@@ -84,6 +93,9 @@ export default function MainNav() {
               <NavDropdown title="User Name" id="basic-nav-dropdown">
                 <Link href="/favourites" passHref legacyBehavior>
                   <NavDropdown.Item onClick={handleNavLinkClick}>Favourites</NavDropdown.Item>
+                </Link>
+                <Link href="/history" passHref legacyBehavior>
+                  <NavDropdown.Item onClick={handleNavLinkClick}>Search History</NavDropdown.Item>
                 </Link>
               </NavDropdown>
             </Nav>
