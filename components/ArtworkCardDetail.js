@@ -1,8 +1,10 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { Button } from "bootstrap";
 import useSWR from "swr";
-import Link from "next/link";
 import Error from "next/error";
+import { useAtom } from "jotai";
+import { favouritesAtom } from "@store"
+import { useState } from "react";
 
 export default function ArtworkCardDetail(props) {
   const { data, error } = useSWR(
@@ -12,6 +14,22 @@ export default function ArtworkCardDetail(props) {
   if (error) return <Error statuscode={404} />;
 
   if (data === null || data === undefined) return null;
+
+  //get reference to the Favourites List
+  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
+
+  //showAdded value
+  const [showAdded, setShowAdded] = useState(true);
+
+  function favouritesClicked() {
+    if (showAdded) {
+      setFavouritesList((current) => current.filter((fav) => fav != objectID));
+      setShowAdded(false);
+    } else {
+      setFavouritesList((current) => [...current, objectID]);
+      setShowAdded(true);
+    }
+  }
 
   return (
     <Card style={{ width: "18rem" }}>
