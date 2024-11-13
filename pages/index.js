@@ -1,14 +1,15 @@
 /*********************************************************************************
-*  WEB422 – Assignment 4
+*  WEB422 – Assignment 5
 *
 *  I declare that this assignment is my own work in accordance with Seneca's
 *  Academic Integrity Policy:
 * 
 *  https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
 * 
-*  Name: Christine Ang Student ID: 121559223 Date: October 31, 2024
+*  Name: Christine Ang  Student ID: 121559223 Date: November 13, 2024
 *
-********************************************************************************/ 
+********************************************************************************/
+
 
 
 import { Row, Col } from "react-bootstrap";
