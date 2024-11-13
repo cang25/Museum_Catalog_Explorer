@@ -21,7 +21,7 @@ export default function MainNav() {
   function submitForm(e) {
     e.preventDefault();
     const queryString = `title=true&q=${searchField}`;
-    setSearchHistory((current) => [...current, searchField]);
+    setSearchHistory((current) => [...current, queryString]);
     setIsExpanded(false);
     router.push(`/artwork?${queryString}`);
     setSearchField("");
@@ -73,7 +73,7 @@ export default function MainNav() {
                   Advanced Search
                 </Nav.Link>
               </Link>
-            </Nav>
+            </Nav>&nbsp;
             <Form className="d-flex" onSubmit={submitForm}>
               <Form.Control
                 type="search"

@@ -17,11 +17,8 @@ export default function History() {
     parsedHistory.push(Object.fromEntries(entries));
   });
 
-  console.log("PARSED HISTORY!");
-  console.log(parsedHistory);
-
   function historyClicked(e, index) {
-    router.push(`/artwork?title=true&q=${searchHistory[index]}`);
+    router.push(`/artwork?${searchHistory[index]}`);
   }
 
   function removeHistoryClicked(e, index) {
