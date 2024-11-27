@@ -24,6 +24,7 @@ export default function Login(props) {
       await authenticateUser(user, password);
       await updateAtoms();
       router.push("/favourites");
+      console.log("Bring me to favorites")
     } catch (err) {
       setWarning(err.message);
     }
