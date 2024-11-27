@@ -7,6 +7,8 @@ export default function Favourites() {
 
   const [favouritesList] = useAtom(favouritesAtom);
 
+  if(!favouritesList) return null;
+
   return (
     <>
       {favouritesList.length > 0 ? (

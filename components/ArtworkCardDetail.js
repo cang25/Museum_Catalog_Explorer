@@ -5,6 +5,7 @@ import Error from "next/error";
 import { useAtom } from "jotai";
 import { favouritesAtom } from "@/store";
 import { useState, useEffect } from "react";
+import { addToFavourites, removeFromFavourites } from "@/lib/userData";
 
 export default function ArtworkCardDetail(props) {
   const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
@@ -25,19 +26,15 @@ export default function ArtworkCardDetail(props) {
 
   if (data === null || data === undefined) return null;
 
-  function favouritesClicked() {
+  async function favouritesClicked() {
     if (artAdded) {
-      setFavouritesList((current) =>
-        current.filter((fav) => fav != props.objectID)
-      );
-      console.log("REMOVED");
-      console.log(favouritesList);
-      setArtAdded(false);
+
+      setFavouritesList(await removeFromFavourites(props.objectID))
+   
     } else {
-      setFavouritesList((current) => [...current, props.objectID]);
-      setArtAdded(true);
-      console.log("ADDED");
-      console.log(favouritesList);
+
+      setFavouritesList(await addToFavourites(props.objectID))
+   
     }
   }
 
