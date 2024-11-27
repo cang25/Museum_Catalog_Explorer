@@ -13,7 +13,7 @@ export default function Login(props) {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
-  const [favouritesHistory, setFavouritesList] = useAtom(favouritesAtom);
+  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
 
   const router = useRouter();
 
@@ -27,13 +27,17 @@ export default function Login(props) {
     } catch (err) {
       setWarning(err.message);
     }
-
-    async function updateAtoms() {
-      setFavouritesList(await getFavourites());
-
-      setSearchHistory(await getHistory());
-    }
   }
+
+  async function updateAtoms() {
+
+    console.log("Update Atoms")
+    setFavouritesList(await getFavourites());
+    console.log("Favorite updated")
+
+    setSearchHistory(await getHistory());
+  }
+
 
   return (
     <>

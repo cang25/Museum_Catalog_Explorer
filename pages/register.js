@@ -1,6 +1,6 @@
 import { Card, Form, Alert, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { authenticateUser } from "@/lib/authenticate";
+import { registerUser } from "@/lib/authenticate";
 import { useRouter } from "next/router";
 
 export default function Login(props) {
@@ -15,8 +15,8 @@ export default function Login(props) {
     e.preventDefault();
 
     try {
-      await registerUser(user, password2);
-      router.push("/favourites");
+      await registerUser(user, password, password2);
+      router.push("/login");
     } catch (err) {
       setWarning(err.message);
     }
@@ -61,8 +61,8 @@ export default function Login(props) {
           <Form.Control
             type="password"
             value={password2}
-            id="password"
-            name="password"
+            id="password2"
+            name="password2"
             onChange={(e) => setPassword2(e.target.value)}
           />
         </Form.Group>
