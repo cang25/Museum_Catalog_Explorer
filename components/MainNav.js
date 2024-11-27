@@ -9,6 +9,7 @@ import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { NavDropdown } from "react-bootstrap";
+import { addToHistory } from "@/lib/userData";
 
 export default function MainNav() {
   const router = useRouter();
@@ -18,10 +19,11 @@ export default function MainNav() {
 
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
 
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
     const queryString = `title=true&q=${searchField}`;
-    setSearchHistory((current) => [...current, queryString]);
+    setSearchHistory(await addToHistory(`title=true&q=${searchField}`))
+    //setSearchHistory((current) => [...current, queryString]);
     setIsExpanded(false);
     router.push(`/artwork?${queryString}`);
     setSearchField("");
