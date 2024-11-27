@@ -1,17 +1,14 @@
 import { Card, Form, Alert, Button } from "react-bootstrap";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { authenticateUser } from "@/lib/authenticate";
-import { useRouter } from 'next/router';
-import { favouritesAtom } from '@/store';
-import { searchHistoryAtom } from '@/store';
+import { useRouter } from "next/router";
+import { favouritesAtom } from "@/store";
+import { searchHistoryAtom } from "@/store";
 import { getFavourites } from "@/lib/userData";
 import { getHistory } from "@/lib/userData";
 import { useAtom } from "jotai";
 
-
-
 export default function Login(props) {
-
   const [warning, setWarning] = useState("");
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
@@ -23,30 +20,19 @@ export default function Login(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    try{
+    try {
       await authenticateUser(user, password);
+      await updateAtoms();
       router.push("/favourites");
-    }catch(err){
-     setWarning(err.message);
+    } catch (err) {
+      setWarning(err.message);
     }
 
     async function updateAtoms() {
+      setFavouritesList(await getFavourites());
 
-      setFavouritesList(await getFavourites()); 
-      
-      setSearchHistory(await getHistory()); 
-
-      try{
-        await authenticateUser(user, password);
-        await updateAtoms();
-        router.push("/favourites");
-      }catch(err){
-       setWarning(err.message);
-      }
-  
+      setSearchHistory(await getHistory());
     }
-
-
   }
 
   return (
@@ -61,25 +47,39 @@ export default function Login(props) {
       <br />
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group >
+        <Form.Group>
           <Form.Label>User:</Form.Label>
-          <Form.Control type="text" value={user} id="userName" name="userName" onChange={e => setUser(e.target.value)} />
+          <Form.Control
+            type="text"
+            value={user}
+            id="userName"
+            name="userName"
+            onChange={(e) => setUser(e.target.value)}
+          />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Password:</Form.Label>
-          <Form.Control type="password" value={password} id="password" name="password" onChange={e => setPassword(e.target.value)} />
-        </Form.Group  >
+          <Form.Control
+            type="password"
+            value={password}
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
 
-        {warning && <>
-          <br />
-          <Alert variant='danger'>
-            {warning}
-          </Alert>
-        </>}
+        {warning && (
+          <>
+            <br />
+            <Alert variant="danger">{warning}</Alert>
+          </>
+        )}
 
         <br />
-        <Button variant="primary" className="pull-right" type="submit">Login</Button>
+        <Button variant="primary" className="pull-right" type="submit">
+          Login
+        </Button>
       </Form>
     </>
   );
