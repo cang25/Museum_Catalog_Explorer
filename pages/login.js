@@ -24,21 +24,16 @@ export default function Login(props) {
       await authenticateUser(user, password);
       await updateAtoms();
       router.push("/favourites");
-      console.log("Bring me to favorites")
     } catch (err) {
       setWarning(err.message);
     }
   }
 
   async function updateAtoms() {
-
-    console.log("Update Atoms")
     setFavouritesList(await getFavourites());
-    console.log("Favorite updated")
 
     setSearchHistory(await getHistory());
   }
-
 
   return (
     <>
