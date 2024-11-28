@@ -8,8 +8,7 @@
 * 
 *  Name: Christine Ang Student ID: 121559223 Date: Nov 29, 2024
 *
-*  Render App (Deployed) Link: _____________________________________________________
-*
+*  Render App (Deployed) Link: https://a6-app.onrender.com/
 ********************************************************************************/ 
 
 

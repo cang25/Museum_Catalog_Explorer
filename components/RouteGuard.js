@@ -29,23 +29,18 @@ export default function RouteGuard(props) {
   }, []);
 
   function authCheck(url) {
-    console.log("AUTH CHECK CHECK");
     // redirect to login page if accessing a private page and not logged in
     const path = url.split("?")[0];
     if (!isAuthenticated() && !PUBLIC_PATHS.includes(path)) {
-      console.log("Failed authentication");
       setAuthorized(false);
       router.push("/login");
     } else {
       setAuthorized(true);
-      console.log("Passed authentication");
     }
   }
 
   async function updateAtoms() {
-    // console.log("Update Atoms")
     setFavouritesList(await getFavourites());
-    // console.log("Favorite updated")
 
     setSearchHistory(await getHistory());
   }
