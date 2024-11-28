@@ -24,7 +24,6 @@ export default function search() {
     }
     queryString += `&isOnView=${data.isOnView}&isHighlight=${data.isHighlight}&q=${data.q}`;
 
-    // setSearchHistory(current => [...current, queryString]);
     setSearchHistory(await addToHistory(queryString))
 
     router.push(`/artwork?${queryString}`);
